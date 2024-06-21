@@ -8,8 +8,8 @@ const app = express();
 app.use(cors())
 app.use(express.urlencoded({ extended: true }));
 
-
-app.get('/car' , async function (req, res) {
+// retirves all cars from the database
+app.get('/cars' , async function (req, res) {
   try {
     let car = await model.Car.find()
     res.json(car);
@@ -23,7 +23,7 @@ app.get('/car' , async function (req, res) {
 
 })
 
-app.get('/car/:id' , async function (req, res) {
+app.get('/cars/:id' , async function (req, res) {
   try {
     let car = await model.Car.findById({_id: req.params.id})
     res.json(car);
@@ -31,13 +31,10 @@ app.get('/car/:id' , async function (req, res) {
   catch (err) {
     console.error(err);
     response.status(400).send("Generic Error")
-
   }
-
-
 })
 
-app.post('/car', async function (req, res) {
+app.post('/cars', async function (req, res) {
   const data = (req.body)
   try{
     let new_car = new model.Car({
@@ -65,7 +62,7 @@ app.post('/car', async function (req, res) {
 
 });
 
-app.delete('/car/:id', async function (req, res) {
+app.delete('/cars/:id', async function (req, res) {
   try{
     let isDeleted = await model.Car.findOneAndDelete({_id: req.params.id});
     if(!isDeleted){
@@ -82,7 +79,7 @@ app.delete('/car/:id', async function (req, res) {
   
 })
 
-app.put('/car/:id', async function(req, res){
+app.put('/cars/:id', async function(req, res){
 
   try{
     const data = (req.body);
